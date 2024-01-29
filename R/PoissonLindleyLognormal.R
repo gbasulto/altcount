@@ -22,13 +22,15 @@ pll.reg <- function(formula, data, n=1500, method = 'BHHH', max.iters = 200) {
 
   # Define Poisson-Lindley probability Function
   pld.prob <- function(y, mu, theta){
-    p <- (theta^2*mu^y*(theta+mu+y+1))/((theta+1)*(mu+theta)^(y+2))
+    p <-
+      (theta^2 * mu^y * (theta + mu + y + 1)) /
+      ((theta + 1) * (mu + theta)^(y + 2))
     return(p)
   }
 
   # define function for adjustment to mean predictions
   PLD.mean.adjustment <- function(theta){
-    return((theta+2)/(theta*(theta+1)))
+    return((theta + 2) / (theta * (theta + 1)))
   }
 
   p_poisson_lindley_lognormal <- function(p, y, X, n, est_method){
