@@ -6,7 +6,8 @@ pll.reg <- function(formula, data, n=1500, method = 'BHHH', max.iters = 200) {
   # The data input is a dataframe that the model should be estimated on
   # n = the number of Halton draws - Use at least 1000
   # method can take any estimation method allowed in the maxLik library
-  # max.iters is the maximum number of iterations allowed in the optimization method
+  # max.iters is the maximum number of iterations allowed in the optimization
+  # method
 
   mod_df <- model.frame(formula, data)
   X <- model.matrix(formula, data)
@@ -39,11 +40,11 @@ pll.reg <- function(formula, data, n=1500, method = 'BHHH', max.iters = 200) {
     pars <- tail(p,2)
     sigma <- abs(pars[2])
     theta <- exp(pars[1])
-    h = halton(n,dim=1)
+    h = halton(n, dim = 1)
 
     probs <- as.vector(rep(0, length(y)))
 
-    i_lognorm <- qnorm(h, mean=0, sd=sigma)
+    i_lognorm <- qnorm(h, mean = 0, sd = sigma)
 
     for (i in i_lognorm){
       coefs_i <- coefs
@@ -92,8 +93,9 @@ pll.reg <- function(formula, data, n=1500, method = 'BHHH', max.iters = 200) {
 }
 
 predict.pll <- function(model, data){
-  # This function takes in a Poisson Lognormal model object and dataframe
-  # The function returns a dataframe with predictions, observed outcome, and residuals for the data that was input
+  # This function takes in a Poisson Lognormal model object and dataframe.
+  # The function returns a dataframe with predictions, observed outcome, and
+  # residuals for the data that was input
   poisson_prob <- function(observed, predicted) {
     log_probs <- dpois(observed, predicted, log = TRUE)
 
@@ -114,7 +116,10 @@ predict.pll <- function(model, data){
   observed <- y
   residuals <- y - predictions
 
-  pred <- list('prediction'=predictions, 'observed'=observed, 'residuals'=residuals)
+  pred <- list(
+    'prediction' = predictions,
+    'observed' = observed,
+    'residuals' = residuals)
 
   return(pred)
 }
